@@ -11,7 +11,7 @@ import {
 } from "../types";
 import { RoutesConfig } from "../types";
 import { safeBase64Decode } from "./base64";
-import { getUsdcAddressForChain } from "./evm";
+import { getUsdcName, getUsdcAddressForChain } from "./evm";
 import { getNetworkId } from "./network";
 
 /**
@@ -89,11 +89,17 @@ export function findMatchingRoute(
  * @returns The default asset
  */
 export function getDefaultAsset(network: Network) {
+  const networkId = getNetworkId(network);
+  const name = getUsdcName(networkId);
+  if (!name) {
+    throw new Error(`No default asset found for network: ${network}`);
+  }
+
   return {
-    address: getUsdcAddressForChain(getNetworkId(network)),
+    address: getUsdcAddressForChain(networkId),
     decimals: 6,
     eip712: {
-      name: network === "base" ? "USD Coin" : "USDC",
+      name,
       version: "2",
     },
   };
