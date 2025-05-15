@@ -18,16 +18,6 @@ export function getUsdcAddress<
 }
 
 /**
- * Gets the USDC name for a specific chain ID
- *
- * @param chainId - The chain ID to get the USDC name for
- * @returns The USDC name for the specified chain
- */
-export function getUsdcName(chainId: number): string {
-  return config[chainId.toString()].usdcName;
-}
-
-/**
  * Gets the USDC contract address for a specific chain ID
  *
  * @param chainId - The chain ID to get the USDC contract address for
